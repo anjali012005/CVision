@@ -11,20 +11,11 @@ import {
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ChevronUp, User2 } from 'lucide-react'
+import Hero from '@/components/Hero/Hero'
 
 const page = () => {
     return (
         <div>
-            {/* <Carousel>
-                <CarouselContent>
-                    <CarouselItem><img className='w-full h-full pl-15' src="./HomeBanner.png" /></CarouselItem>
-                    <CarouselItem><img src="./HomeBanner.png" /></CarouselItem>
-                    <CarouselItem><img src="./HomeBanner.png" /></CarouselItem>
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-            </Carousel> */}
-
             <div>
                 <SidebarProvider>
                     <Sidebar>
@@ -56,12 +47,18 @@ const page = () => {
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </SidebarMenuItem>
+
                             </SidebarMenu>
                         </SidebarFooter>
                     </Sidebar>
+                    <div className='w-full h-80 p-3'>
+                        <img src="./HomeBanner.png" className='w-full h-80 p-3 rounded-4xl object-cover' />
+
+                        <Hero />
+                    </div>
                 </SidebarProvider>
-            </div>
-        </div>
+            </div >
+        </div >
 
     )
 }
