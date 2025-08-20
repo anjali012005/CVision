@@ -13,6 +13,10 @@ const page = () => {
                 <SidebarProvider>
                     <Sidebar>
                         <SidebarHeader />
+                        <img src='./user-avatar.png' alt="user-profile" className='w-36 h-36 rounded-full bg-amber-500 m-auto' />
+                        <p className="m-auto p-3 text-sm text-amber-500 italic">
+                            "Consistency beats talent🚀"
+                        </p>
                         <SidebarContent />
                         <SidebarFooter>
                             <SidebarMenu>
