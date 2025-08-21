@@ -7,6 +7,24 @@ const registerUser = async(req, res)=>{
     try {
         const {name, email, password} = req.body;
 
+        // console.log({email});
+
+        //All feilds are mendatory
+        if(!name || !email || !password){
+            res.status(500).json({
+                message: 'All feilds are mendatory!'
+            })
+        }
+
+        //check if user already exists
+        const existingUser = User.findOne({email});
+        if(existingUser){
+            res.status(500).json({
+                message: 'User already exist!'
+            })
+        }
+
+        //Create new User
         const user = await User.create({
             name,
             email,
