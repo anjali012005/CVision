@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-export default function Register() {
+export default function Login() {
     const form = useForm({
         defaultValues: {
             name: "",
@@ -18,22 +18,8 @@ export default function Register() {
             <div className="border-2 border-amber-500">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit((data) => console.log(data))} className="space-y-6 w-150 p-5">
-                        <h2><b>Register to Begin Your Interview Journey</b></h2>
+                        <h2><b>Welcome Back! Continue Your Interview Journey</b></h2>
 
-                        {/* Name field */}
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Name</FormLabel>
-                                    <FormControl>
-                                        <Input type="string" placeholder="Enter Your Name" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
 
                         {/* Email field */}
                         <FormField
@@ -66,9 +52,10 @@ export default function Register() {
                         />
 
                         <button type="submit" className="px-4 py-2 bg-amber-500 text-white rounded ">
-                            Register
+                            Login
                         </button>
-                        <p className="text-gray-400">Already have an account ?<b> <a href="/login" className="text-amber-500">Login</a></b></p>
+
+                        <p className="text-gray-400">Do not  have an account ?<b> <a href='/' className="text-amber-500">Register</a></b></p>
                     </form>
 
                 </Form>
