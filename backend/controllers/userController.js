@@ -11,15 +11,15 @@ const registerUser = async (req, res) => {
 
         //All feilds are mendatory
         if (!name || !email || !password) {
-            res.status(500).json({
+            res.status(400).json({
                 message: 'All feilds are mendatory!'
             })
         }
 
         //check if user already exists
-        const existingUser = User.findOne({ email });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
-            res.status(500).json({
+            res.status(400).json({
                 message: 'User already exist!'
             })
         }
