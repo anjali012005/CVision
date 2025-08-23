@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { signToken } = require("../utils/jwt");
 
 
 
@@ -31,13 +32,16 @@ const registerUser = async (req, res) => {
             password
         });
 
+        const token = signToken({ id: user._id, email: user.email, name: user.name });
+
         res.status(200).json({
             message: "User registered successfully!",
             user: {
                 id: user._id,
                 name: user.name,
                 email: user.email
-            }
+            },
+            token
         });
 
     } catch (error) {
