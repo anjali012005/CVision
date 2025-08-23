@@ -14,17 +14,25 @@ import {
 } from "@/components/ui/card"
 import { useAuth } from '@/context/AuthContext';
 import ProtectedRoute from '../ProtectedRoute';
+import { useRouter } from 'next/navigation';
 
 
 const Hero = () => {
     const { user, logout } = useAuth();
+
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push("/home/upload"); 
+    };
     return (
         <ProtectedRoute>
             <div>
                 <div className='flex justify-center'>
                     <Button
+                        onClick={handleClick}
                         variant="outline"
-                        className="hover:bg-[#c29e19]  text-[#c29e19] transition duration-300 ease-in-out transform hover:scale-105"
+                        className="hover:bg-[#c29e19]  text-[#c29e19] transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                     >Get Started</Button>
                 </div>
 

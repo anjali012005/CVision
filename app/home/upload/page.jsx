@@ -88,9 +88,14 @@ export default function ResumeUploadForm() {
           />
 
           {/* Submit */}
-          <Button type="submit" className="w-full hover:scale-105 transition">
-            Let’s Begin the Interview ✨
-          </Button>
+          {!fileName ?
+            <Button disabled type="submit" className="w-full hover:scale-105 transition">
+              Let’s Begin the Interview ✨
+            </Button> :
+            <Button type="submit" className="w-full hover:scale-105 transition">
+              Let’s Begin the Interview ✨
+            </Button>
+          }
         </form>
       </Form>
     </div>
