@@ -71,12 +71,15 @@ const loginUser = async (req, res) => {
             })
         }
 
+        const token = signToken({ id: user._id, email: user.email, name: user.name });
+
         res.status(200).json({
             message: "Logged In!",
             user: {
                 email,
-                password
-            }
+                password,
+            },
+            token
         })
 
     } catch (error) {

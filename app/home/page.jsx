@@ -1,12 +1,16 @@
+"use client"
+
 import * as React from 'react'
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ChevronUp, User2 } from 'lucide-react'
 import Hero from '@/components/Hero/Hero'
+import { useAuth } from '@/context/AuthContext'
 
 
 const page = () => {
+    const { user } = useAuth();
     return (
         <div>
             <div>
@@ -17,6 +21,10 @@ const page = () => {
                         <p className="m-auto p-3 text-sm text-amber-500 italic">
                             "Consistency beats talent🚀"
                         </p>
+                        <p className="m-auto p-1 text-sm text-amber-500 italic">
+                            <b>{user?.name}</b>
+                        </p>
+
                         <SidebarContent />
                         <SidebarFooter>
                             <SidebarMenu>
@@ -24,7 +32,7 @@ const page = () => {
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <SidebarMenuButton>
-                                                <User2 /> Username
+                                                <User2 /> {user?.name}
                                                 <ChevronUp className="ml-auto" />
                                             </SidebarMenuButton>
                                         </DropdownMenuTrigger>
