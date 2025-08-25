@@ -1,92 +1,87 @@
 const User = require("../models/User");
 const { signToken } = require("../utils/jwt");
 
+// ---------------- User Controllers ----------------
 
-
-// Sign Up / Reister User
+// Register User
 const registerUser = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
+  try {
+    const { name, email, password } = req.body;
 
-        // console.log({email});
-
-        //All feilds are mendatory
-        if (!name || !email || !password) {
-            res.status(400).json({
-                message: 'All feilds are mendatory!'
-            })
-        }
-
-        //check if user already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            res.status(400).json({
-                message: 'User already exist!'
-            })
-        }
-
-        //Create new User
-        const user = await User.create({
-            name,
-            email,
-            password
-        });
-
-        const token = signToken({ id: user._id, email: user.email, name: user.name });
-
-        res.status(200).json({
-            message: "User registered successfully!",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email
-            },
-            token
-        });
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: "Server error while registering user!"
-        })
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are mandatory!" });
     }
-}
 
-//Login User
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists!" });
+    }
+
+    const user = await User.create({ name, email, password });
+
+    const token = signToken({ id: user._id, email: user.email, name: user.name });
+
+    res.status(200).json({
+      message: "User registered successfully!",
+      user: { id: user._id, name: user.name, email: user.email },
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while registering user!" });
+  }
+};
+
+// Login User
 const loginUser = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            res.status(500).json({
-                message: 'User Not Found. Please Register!'
-            })
-        }
-
-        if (password != user.password) {
-            res.status(500).json({
-                message: 'Password is wrong!'
-            })
-        }
-
-        const token = signToken({ id: user._id, email: user.email, name: user.name });
-
-        res.status(200).json({
-            message: "Logged In!",
-            user: {
-                email,
-                password,
-            },
-            token
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            message: "Login failed!"
-        })
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required!" });
     }
-}
 
-module.exports = { registerUser, loginUser };
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found. Please register!" });
+
+    if (user.password !== password) return res.status(401).json({ message: "Incorrect password!" });
+
+    const token = signToken({ id: user._id, email: user.email, name: user.name });
+
+    res.status(200).json({
+      message: "Logged in successfully!",
+      user: { id: user._id, name: user.name, email: user.email },
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Login failed!" });
+  }
+};
+
+// Upload Resume
+const resumeUpload = async (req, res) => {
+  try {
+    const resumeFile = req.file;
+    const { name, email } = req.body;
+
+    if (!resumeFile) {
+      return res.status(400).json({ message: "No file uploaded!" });
+    }
+
+    // Optional: send resumeFile.path to VAPI
+    // const vapiResponse = await sendToVAPI(resumeFile.path);
+
+    res.status(200).json({
+      message: "Resume uploaded successfully!",
+      user: { name, email },
+      resumeFile: resumeFile.filename,
+      // vapiResponse
+    });
+  } catch (error) {
+    console.error("Error uploading resume:", error);
+    res.status(500).json({ message: "Failed to upload resume" });
+  }
+};
+
+module.exports = { registerUser, loginUser, resumeUpload };
