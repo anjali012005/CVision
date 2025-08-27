@@ -5,18 +5,21 @@ const streamifier = require("streamifier");
 exports.uploadResume = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+    
 
     const updatedResume = await Resume.findOneAndUpdate(
-      { email: req.body.email }, // or req.user.email if auth
+      { email: req.user.email }, // or req.user.email if auth
       {
-        name: req.body.name,
+        name: req.user.name,
         publicId: req.file.filename,
         format: req.file.mimetype.split("/")[1],
-        url: req.file.path,
+        resumeUrl: req.file.path,
         updatedAt: new Date(),
       },
       { upsert: true, new: true }
     );
+
+    updatedResume.save();
 
     res.status(200).json({
       message: "Resume uploaded successfully",
