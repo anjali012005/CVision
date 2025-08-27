@@ -5,6 +5,6 @@ const { uploadResume } = require("../controllers/resumeController");
 const auth = require("../middleware/auth");
 
 // Route for uploading resume
-router.post("/upload-resume",auth, parser.single("resume"), uploadResume);
+router.post("/upload-resume", auth,parser.single("resume"), uploadResume);
 
 module.exports = router;
