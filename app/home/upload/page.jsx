@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useAuth } from "@/context/AuthContext";
 
 import {
   Form,
@@ -23,6 +24,7 @@ const formSchema = z.object({
 });
 
 export default function ResumeUploadForm() {
+  const { user } = useAuth();
   const [fileName, setFileName] = useState(null);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -30,8 +32,8 @@ export default function ResumeUploadForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      name: user?.name,
+      email: user?.email,
       resume: null,
     },
   });
@@ -70,7 +72,7 @@ export default function ResumeUploadForm() {
       const data = await res.json();
       console.log("Backend response:", data);
 
-      // Example: data from VAPI agent
+      //Example : data from VAPI agent
       setResponseMessage("Resume uploaded and processed successfully!");
       form.reset();
       setFileName(null);
@@ -139,11 +141,10 @@ export default function ResumeUploadForm() {
                 <FormControl>
                   <div
                     {...getRootProps()}
-                    className={`border-2 border-dashed rounded-xl p-6 cursor-pointer text-center transition ${
-                      isDragActive
-                        ? "border-yellow-500 bg-yellow-50"
-                        : "border-gray-300"
-                    }`}
+                    className={`border-2 border-dashed rounded-xl p-6 cursor-pointer text-center transition ${isDragActive
+                      ? "border-yellow-500 bg-yellow-50"
+                      : "border-gray-300"
+                      }`}
                   >
                     <input {...getInputProps()} />
                     {fileName ? (
