@@ -8,15 +8,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-async function extractPdfFromCloudinary(publicId) {
-  // Download the PDF as a buffer
-  const result = await cloudinary.api.resource(publicId, { resource_type: 'raw' });
-  const url = result.secure_url;
 
-  const axios = require('axios');
-  const response = await axios.get(url, { responseType: 'arraybuffer' });
-  const data = await pdfParse(response.data);
-  return data.text;
-}
 
 module.exports = cloudinary;
