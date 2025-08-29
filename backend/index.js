@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const userRoute = require('./routes/userRoute');
 const resumeRoute = require('./routes/resumeRoute');
+const interviewRoute = require('./routes/interviewRoute');
 const path = require('path');
 
 
@@ -13,10 +14,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-app.get("/test-upload", (req, res) => {
-  res.sendFile(path.join(__dirname, "uploads", "718c8ca1529ef041f4c21a3012de21e8.pdf"));
-});
 
 
 connectDB();
@@ -30,6 +27,8 @@ app.use(cors({
 
 app.use('/auth', userRoute);
 app.use("/api", resumeRoute);
+app.use('/api/interview', interviewRoute);
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on PORT ${process.env.PORT}`)

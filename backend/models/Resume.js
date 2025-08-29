@@ -23,6 +23,9 @@ const ResumeSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        isPrivate:{
+            type:Boolean
+        },
         uploadedAt: {
             type: Date,
             default: Date.now
