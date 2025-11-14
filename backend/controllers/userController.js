@@ -60,28 +60,54 @@ const loginUser = async (req, res) => {
 };
 
 // Upload Resume
+// const resumeUpload = async (req, res) => {
+//   try {
+//     const resumeFile = req.file;
+//     const { name, email } = req.body;
+
+//     if (!resumeFile) {
+//       return res.status(400).json({ message: "No file uploaded!" });
+//     }
+
+//     // Optional: send resumeFile.path to VAPI
+//     // const vapiResponse = await sendToVAPI(resumeFile.path);
+
+//     res.status(200).json({
+//       message: "Resume uploaded successfully!",
+//       user: { name, email },
+//       resumeFile: resumeFile.filename,
+//       // vapiResponse
+//     });
+//   } catch (error) {
+//     console.error("Error uploading resume:", error);
+//     res.status(500).json({ message: "Failed to upload resume" });
+//   }
+// };
+
+// Upload Resume Controller (Cloudinary)
 const resumeUpload = async (req, res) => {
   try {
-    const resumeFile = req.file;
     const { name, email } = req.body;
 
-    if (!resumeFile) {
+    if (!req.file) {
       return res.status(400).json({ message: "No file uploaded!" });
     }
 
-    // Optional: send resumeFile.path to VAPI
-    // const vapiResponse = await sendToVAPI(resumeFile.path);
+    // Cloudinary automatically returns a URL in: req.file.path
+    const resumeUrl = req.file.path; // ⭐ Cloudinary URL
+    const publicId = req.file.filename; // Cloudinary public ID
 
     res.status(200).json({
       message: "Resume uploaded successfully!",
       user: { name, email },
-      resumeFile: resumeFile.filename,
-      // vapiResponse
+      resumeUrl,      // full https cloud URL
+      publicId,       // for deleting later if needed
     });
   } catch (error) {
     console.error("Error uploading resume:", error);
     res.status(500).json({ message: "Failed to upload resume" });
   }
 };
+
 
 module.exports = { registerUser, loginUser, resumeUpload };

@@ -1,8 +1,9 @@
-const  Router  = require("express");
-const { registerUser, loginUser, resumeUpload } = require("../controllers/userController");
-const express = require('express');
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+// import  Router from "express";
+import { registerUser, loginUser, resumeUpload } from "../controllers/userController.js";
+
+import express from 'express';
+
+import { upload } from "../utils/cloudinaryConfig.js";
 
 const router = express.Router();
 
@@ -12,4 +13,4 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post("/resume", upload.single("resume"), resumeUpload);
 
-module.exports = router;
+export default router;

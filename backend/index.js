@@ -1,13 +1,13 @@
-const express = require('express');
-const connectDB = require('./db/connect');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const cookieParser = require("cookie-parser");
-const userRoute = require('./routes/userRoute');
-const resumeRoute = require('./routes/resumeRoute');
-const interviewRoute = require('./routes/interviewRoute');
-const path = require('path');
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import path from "path";
 
+import connectDB from "./db/connect.js";
+import userRoute from "./routes/userRoute.js";
+import resumeRoute from "./routes/resumeRoute.js";
+import interviewRoute from "./routes/interviewRoute.js";
 
 dotenv.config();
 const app = express();
